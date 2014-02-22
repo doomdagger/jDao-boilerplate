@@ -35,14 +35,6 @@ public interface GenericDao<T> {
 
 	/**
 	 * update查找到的第一个符合条件的实体
-	 * @param criteriaWrapper 查询条件
-	 * @param UpdateWrapper update操作
-	 * @return 更新实体个数
-	 */
-	int updateFirstByParams(CriteriaWrapper criteriaWrapper, UpdateWrapper UpdateWrapper);
-	
-	/**
-	 * update查找到的第一个符合条件的实体
 	 * @param id 实体id
 	 * @param UpdateWrapper update操作
 	 * @return 更新实体个数
@@ -69,19 +61,20 @@ public interface GenericDao<T> {
 	 * @param paramT entity
 	 * @return
 	 */
-	int upsert(T paramT);
+	void upsert(T paramT);
 	/**
 	 * 
 	 * @param paramTs
 	 * @return
 	 */
-	int upsertMulti(Collection<T> paramTs);
+	void upsertMulti(Collection<T> paramTs);
 	
 	/**
 	 * 删除一个entity
 	 * @param paramT 主键值不为null的实体
 	 */
 	void delete(T paramT);
+	
 	
 	/**
 	 * 根据传递个命名参数来查找若干符合条件的记录，然后执行delete
@@ -380,6 +373,24 @@ public interface GenericDao<T> {
 	T findOneByJoinedParams(Map<String, String> propPair, CriteriaWrapper criteriaWrapper);
 	
 	/**
+	 * 
+	 * @param propPair
+	 * @param criteriaWrapper
+	 * @param projectionWrapper
+	 * @return
+	 */
+	Tuple findOneProjectedByJoinedParams(Map<String, String> propPair, CriteriaWrapper criteriaWrapper, ProjectionWrapper projectionWrapper);
+	
+	/**
+	 * 
+	 * @param propPair
+	 * @param criteriaWrapper
+	 * @param projectionWrapper
+	 * @param sortable
+	 * @return
+	 */
+	Tuple findOneProjectedByJoinedParamsInOrder(Map<String, String> propPair, CriteriaWrapper criteriaWrapper, ProjectionWrapper projectionWrapper, Sortable sortable);
+	/**
 	 * 利用HQL执行命名查询，传入的参数为命名查询名称以及命名参数的键值对，高效率！
 	 * @param queryName
 	 * @param paramMapper
@@ -399,4 +410,11 @@ public interface GenericDao<T> {
 	 * @return 返回long值,代表记录总数
 	 */
 	long getCount();
+	
+	/**
+	 * 获取符合某种查询条件的数据库中的记录个数
+	 * @param criteriaWrapper
+	 * @return
+	 */
+	long getCountByParam(CriteriaWrapper criteriaWrapper);
 }

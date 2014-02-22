@@ -1,6 +1,12 @@
 package com.doomdagger.dao.support;
 
+/**
+ * 一个update条件，为UpdateWrapper提供支持
+ * @author apple
+ *
+ */
 public class UpdateEntry {
+	
 	private String propertyName;
 	//inc, set
 	private String action;

@@ -3,6 +3,11 @@ package com.doomdagger.dao.support;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tuple对象，尚且存在不兼容情况，不稳定
+ * @author Li He
+ *
+ */
 public class Tuple {
 
 	private List<Object> values;
