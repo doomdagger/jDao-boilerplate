@@ -1,11 +1,15 @@
 package com.doomdagger.pojos;
 
-import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import com.doomdagger.pojos.support.EntityObject;
 
 @NamedQueries({
 	@NamedQuery(name="area.findAll", query="select area from Area area"),
@@ -13,7 +17,7 @@ import javax.persistence.NamedQuery;
 })
 
 @Entity
-public class Area implements Serializable{
+public class Area extends EntityObject{
 	/**
 	 * 
 	 */
@@ -26,7 +30,26 @@ public class Area implements Serializable{
 	private double latitude;
 	private double radius;
 	
+	@OneToMany(mappedBy="area", fetch=FetchType.LAZY)
+	private List<Building> buildings;
 	
+//	private Map<String, Building> map;
+	
+//	public Map<String, Building> getMap() {
+//		return map;
+//	}
+//
+//	public void setMap(Map<String, Building> map) {
+//		this.map = map;
+//	}
+
+	public List<Building> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(List<Building> buildings) {
+		this.buildings = buildings;
+	}
 	
 	public Area() {}
 	
