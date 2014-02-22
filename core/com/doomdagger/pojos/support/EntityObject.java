@@ -262,6 +262,10 @@ public class EntityObject implements Serializable{
 	@SuppressWarnings("rawtypes")
 	private Object getJsonObject(Object object){
 		
+		if(object==null){
+			return null;
+		}
+		
 		if(object instanceof EntityObject){ //字段对象为EntityObject
 			object = ((EntityObject)object).toJSON();
 		}else if(object instanceof Date){  //字段对象为Date
