@@ -26,8 +26,8 @@ import com.doomdagger.dao.support.UpdateWrapper;
 public class GenericDaoImpl<T> implements GenericDao<T>{
 	private Class<T> cls;
 	protected HibernateTemplate hibernateTemplate;
-	//请务必使用getSession()来获取Session
-	//private Session session;
+	
+	
 	/**
 	 * Default constructor. 构造函数不传参，但是很重要，为继承的子类抽出泛型的Class对象，以便于 传给DAO方法
 	 */
@@ -50,7 +50,7 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 	
 	
 	
-	//OK!!!
+	
 	@Override
 	public void add(T paramT) {
 		hibernateTemplate.save(paramT);
@@ -58,13 +58,8 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 
 	@Override
 	public void addMulti(Collection<T> paramTs) {
-		hibernateTemplate.saveOrUpdateAll(paramTs);
-	}
-
-	@Override
-	public void addMultiOneByOne(Collection<T> paramTs) {
-		for(T paraT : paramTs){
-			hibernateTemplate.save(paraT);
+		for(T paramT : paramTs){
+			add(paramT);
 		}
 	}
 
@@ -80,7 +75,7 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 	}
 
 	@Override
-	public int updateFirstByParams(String id, UpdateWrapper UpdateWrapper) {
+	public int updateFirstById(String id, UpdateWrapper UpdateWrapper) {
 		CriteriaWrapper criteriaWrapper = CriteriaWrapper.instance().and(Restrictions.eq("id", id));
 		return wrapBatchUpdate(criteriaWrapper, UpdateWrapper);
 	}
@@ -223,7 +218,7 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 
 
 	@Override
-	public List<T> findMultiByIds(String... ids) {
+	public List<T> findByIds(String... ids) {
 		return wrapQueryList(CriteriaWrapper.instance().and(Restrictions.in("id", ids)), null, null, null);
 	}
 
@@ -231,7 +226,7 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 
 
 	@Override
-	public List<T> findMultiByIdsInOrder(Sortable sortable, String... ids) {
+	public List<T> findByIdsInOrder(Sortable sortable, String... ids) {
 		return wrapQueryList(CriteriaWrapper.instance().and(Restrictions.in("id", ids)), null, sortable, null);
 	}
 
@@ -421,6 +416,99 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 
 	public Session getSession() {
 		return hibernateTemplate.getSessionFactory().getCurrentSession();
+	}
+
+
+
+	@Override
+	public int updateMultiByIds(Collection<String> ids,
+			UpdateWrapper UpdateWrapper) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	@Override
+	public int upsert(T paramT) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	@Override
+	public int upsertMulti(Collection<T> paramTs) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public List<T> findByJoinedParamsInPage(Map<String, String> propPair,
+			CriteriaWrapper criteriaWrapper, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<T> findByJoinedParamsInOrder(Map<String, String> propPair,
+			CriteriaWrapper criteriaWrapper, Sortable sortable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<T> findByJoinedParamsInPageInOrder(
+			Map<String, String> propPair, CriteriaWrapper criteriaWrapper,
+			Pageable pageable, Sortable sortable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<Tuple> findProjectedByJoinedParams(
+			Map<String, String> propPair, CriteriaWrapper criteriaWrapper,
+			ProjectionWrapper projectionWrapper) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<Tuple> findProjectedByJoinedParamsInPage(
+			Map<String, String> propPair, CriteriaWrapper criteriaWrapper,
+			ProjectionWrapper projectionWrapper, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<Tuple> findProjectedByJoinedParamsInOrder(
+			Map<String, String> propPair, CriteriaWrapper criteriaWrapper,
+			ProjectionWrapper projectionWrapper, Sortable sortable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<Tuple> findProjectedByJoinedParamsInPageInOrder(
+			Map<String, String> propPair, CriteriaWrapper criteriaWrapper,
+			ProjectionWrapper projectionWrapper, Pageable pageable,
+			Sortable sortable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
