@@ -1,6 +1,7 @@
 package com.doomdagger.dao.support;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @author Li He
  *
  */
-public class Tuple {
+public class Tuple implements Iterable<Object>{
 
 	private List<Object> values;
 	
@@ -21,9 +22,16 @@ public class Tuple {
 	
 	public Tuple(Object vals){
 		values = new ArrayList<Object>();
-		for(Object object : (Object[])vals){
-			values.add(object);
+
+		if(vals instanceof Object[]){
+			for(Object object : (Object[])vals){
+				values.add(object);
+			}
+		}else if(vals instanceof Object){
+			values.add(vals);
 		}
+		
+		
 	}
 	
 	public int size(){
@@ -40,5 +48,10 @@ public class Tuple {
 	
 	public String toString(){
 		return values.toString();
+	}
+
+	@Override
+	public Iterator<Object> iterator() {
+		return values.iterator();
 	}
 }

@@ -9,7 +9,8 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.doomdagger.dao.impl.AreaDao;
 import com.doomdagger.dao.support.CriteriaWrapper;
-import com.doomdagger.dao.support.UpdateWrapper;
+import com.doomdagger.dao.support.ProjectionWrapper;
+import com.doomdagger.dao.support.Tuple;
 
 public class DaoUnitTest {
 //	@Test
@@ -55,7 +56,13 @@ public class DaoUnitTest {
 
 		AreaDao areaDao = (AreaDao)ctx.getBean("areaDao");
 		
-		areaDao.updateMultiByParams(CriteriaWrapper.instance().and(Restrictions.eq("id", "'a5b17c11-a17e-4a04-b2eb-bd138dd297c0'")), UpdateWrapper.instance().inc("radius", 300));
+		//areaDao.updateMultiByParams(CriteriaWrapper.instance().and(Restrictions.eq("id", "'a5b17c11-a17e-4a04-b2eb-bd138dd297c0'")), UpdateWrapper.instance().inc("radius", 300));
+		
+		Tuple tuple = areaDao.findOneProjectedByParams(CriteriaWrapper.instance().and(Restrictions.eq("areaName", "吼吼")), ProjectionWrapper.instance().fields("id","areaName"));
+		
+		for(Object object : tuple){
+			System.err.println(object);
+		}
 		
 	}
 }
